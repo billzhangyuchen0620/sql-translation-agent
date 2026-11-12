@@ -11,9 +11,9 @@ the observed diff for self-correction (up to 2 rounds).
 1. **Translate** - an LLM (gpt-4o-mini, temperature 0) converts T-SQL to Snowflake SQL.
 2. **Execute** - the translation runs against a sample database (DuckDB, used
    locally as a Snowflake stand-in; see Limitations).
-3. **Compare** — result sets are normalized (string-cast, row-sorted) and
+3. **Compare** - result sets are normalized (string-cast, row-sorted) and
    compared cell-by-cell against a hand-written reference query.
-4. **Self-correct** — on mismatch, the diff/error is sent back to the model
+4. **Self-correct** - on mismatch, the diff/error is sent back to the model
    for a corrected translation (up to 2 rounds).
 
 ## Evaluation
