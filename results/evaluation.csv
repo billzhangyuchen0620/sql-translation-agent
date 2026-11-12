@@ -1,0 +1,17 @@
+id,pitfall,first_try_pass,final_pass,attempts,final_sql
+1,TOP -> LIMIT,True,True,1,"SELECT emp_name, salary FROM employees ORDER BY salary DESC LIMIT 3;"
+2,GETDATE() -> CURRENT_DATE,True,True,1,SELECT CURRENT_DATE() AS today
+3,ISNULL -> COALESCE,True,True,1,"SELECT emp_name, COALESCE(CAST(manager_id AS VARCHAR), 'No Manager') AS manager FROM employees ORDER BY emp_id;"
+4,Bracket identifiers -> double quotes,True,True,1,"SELECT emp_name, salary FROM employees WHERE salary > 100000 ORDER BY salary;"
+5,String concatenation + -> ||,True,True,1,SELECT e.emp_name || ' (' || d.dept_name || ')' AS label FROM employees e JOIN departments d ON e.dept_id = d.dept_id ORDER BY e.emp_id;
+6,LEN -> LENGTH,True,True,1,"SELECT emp_name, LENGTH(emp_name) AS name_len FROM employees ORDER BY emp_id;"
+7,"YEAR() grouping (compatible function, dialect-safe)",True,True,1,"SELECT EXTRACT(YEAR FROM order_date) AS y, SUM(amount) AS total FROM orders GROUP BY EXTRACT(YEAR FROM order_date) ORDER BY y"
+8,"Control case: already compatible, must pass unchanged",True,True,1,"SELECT dept_id, AVG(salary) AS avg_salary FROM employees GROUP BY dept_id ORDER BY dept_id;"
+9,TOP + ISNULL combined,True,True,1,"SELECT emp_name, COALESCE(CAST(manager_id AS VARCHAR), 'None') AS mgr FROM employees ORDER BY hire_date LIMIT 5;"
+10,GETDATE() in WHERE clause,True,True,1,SELECT COUNT(*) AS senior_count FROM employees WHERE hire_date <= CURRENT_TIMESTAMP;
+11,DATEADD -> date + INTERVAL (result must stay DATE),False,False,3,"SELECT emp_name, DATEADD(day, 90, hire_date) AS probation_end FROM employees ORDER BY emp_id;"
+12,DATEDIFF argument style + GETDATE(),False,True,2,"SELECT emp_name, DATEDIFF('year', hire_date, CURRENT_DATE()) AS years_of_service FROM employees WHERE DATEDIFF('year', hire_date, CURRENT_DATE()) >= 5 ORDER BY emp_name"
+13,DATEPART argument style,True,True,1,"SELECT EXTRACT(month FROM order_date) AS order_month, COUNT(*) AS order_count FROM orders GROUP BY EXTRACT(month FROM order_date) ORDER BY order_month"
+14,CHARINDEX -> INSTR,True,True,1,"SELECT emp_name, POSITION('o' IN emp_name) AS first_o_pos FROM employees ORDER BY emp_id;"
+15,EOMONTH -> LAST_DAY,True,True,1,"SELECT LAST_DAY(order_date) AS month_end, SUM(amount) AS total FROM orders GROUP BY LAST_DAY(order_date) ORDER BY month_end;"
+16,Composite report query: TOP + string concat + ISNULL + LEN in one query,True,True,1,"SELECT e.emp_name || ' (' || d.dept_name || ')' AS label, COALESCE(CAST(e.manager_id AS VARCHAR), 'None') AS mgr, LENGTH(e.emp_name) AS name_len FROM employees e JOIN departments d ON e.dept_id = d.dept_id ORDER BY e.hire_date LIMIT 5;"
