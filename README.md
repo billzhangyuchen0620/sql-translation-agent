@@ -8,8 +8,8 @@ the observed diff for self-correction (up to 2 rounds).
 
 ## How it works
 
-1. **Translate** — an LLM (gpt-4o-mini, temperature 0) converts T-SQL to Snowflake SQL.
-2. **Execute** — the translation runs against a sample database (DuckDB, used
+1. **Translate** - an LLM (gpt-4o-mini, temperature 0) converts T-SQL to Snowflake SQL.
+2. **Execute** - the translation runs against a sample database (DuckDB, used
    locally as a Snowflake stand-in; see Limitations).
 3. **Compare** — result sets are normalized (string-cast, row-sorted) and
    compared cell-by-cell against a hand-written reference query.
