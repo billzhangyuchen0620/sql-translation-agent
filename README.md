@@ -62,7 +62,7 @@ Full per-case results: `results/evaluation.csv`
 ## Failure analysis
 
 Case 11 (DATEADD) failed all three attempts. The model consistently
-produced `DATEADD(day, 90, hire_date)` — valid Snowflake SQL — but the
+produced `DATEADD(day, 90, hire_date)` - valid Snowflake SQL - but the
 local validation stand-in (DuckDB) has no DATEADD function, so every
 attempt failed at execution, and the correction loop never switched to
 the equivalent `hire_date + INTERVAL 90 DAY` form. The failure is a
@@ -73,7 +73,7 @@ in the validator would close it.
 ## Limitations
 
 - DuckDB stands in for Snowflake locally. A few Snowflake-valid constructs
-  (e.g. DATEADD) are not executable in DuckDB — see Failure analysis.
+  (e.g. DATEADD) are not executable in DuckDB - see Failure analysis.
 - Comparison is result-set based: it proves equivalence on this sample
   data, not for all possible data.
 
